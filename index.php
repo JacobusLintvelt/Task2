@@ -8,6 +8,10 @@
     <body>
         <?php
         
+        $NamesArr = array("Jan","Frik","Ben","Riaan","Maria","Susan","Santie","Freddie","Peter","Garret Pieter", "Pieter Andre","Miena", "Aaron", "Aron-James","Shadow", "Shae", "Shahmir", "Shai", "Shane", "jaco");
+        $SurnameArr = array('Duran','Durham','Dyer','Eaton','Edwards','Elliott','Ellis','Ellison','Emerson','England', 'Fuentes','Fuller','Fulton','Gaines','Gallagher','Gallegos','Galloway', 'Gamble','Van Zyl','Harold');
+        $size = sizeof($SurnameArr);
+        echo $size;
         ?>
     </body>
 </html>
