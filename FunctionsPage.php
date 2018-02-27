@@ -1,15 +1,17 @@
 <?php
 
+
+
 function GenerateLine($index, $name, $surname) {
 
     $dateOfBirth = GenDateOfBirth();
     $age = Getage($dateOfBirth);
-    $initials = Getinitials($name);
+    $initials = GetInisials($name);
 
-    $line = array($index, $name, Surname, $initials, $age, $dateOfBirth);
+    return $line = array($index, $name, $surname, $initials, $age, $dateOfBirth);
 }
 
-  function GenDateOfBirth() {
+function GenDateOfBirth() {
 
     $day = rand(1, 30);
     $month = rand(1, 12);
@@ -17,7 +19,7 @@ function GenerateLine($index, $name, $surname) {
 
     $date = $day . "-" . $month . "-" . $year;
     $time = strtotime($date);
-    $newformat = date('d-m-Y',$time);
+    $newformat = date('d/m/Y', $time);
     if (checkdate($month, $day, $year) == True) {
         return $newformat;
     } else {
@@ -25,16 +27,22 @@ function GenerateLine($index, $name, $surname) {
     }
 }
 
-function Getage($dateOfBirth)
-{
-   $year =  date('Y', $dateOfBirth );
-   
-   $age = date("Y") - $year;
+function Getage($dateOfBirth) {
+    echo $dateOfBirth;
     
+    $year = substr($dateOfBirth, 6, 4);
+     echo $year;
+    $age = date("Y") - $year;
+    echo $age;
+
     return $age;
-            
 }
 
-function GetInisials($name){
-    
+function GetInisials($name) {
+    $Initial = explode(" ", $name);
+    $initials = null;
+    foreach ($Initial as $I) {
+        $initials .= $I[0];
+    }
+    return $initials;
 }
