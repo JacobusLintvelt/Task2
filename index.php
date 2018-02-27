@@ -16,9 +16,11 @@
             $index = 1;
             $name ="jaco";
             $surname="lint";
-            while(TRUE){
-            print_r(GenerateLine($index, $name, $surname)) ;
+            $count = 0;
+            while(1000000 > $count){
+            print_r(GenerateLine($count, $name, $surname)) ;
             echo "</br>";
+            $count++;
             }
         ?>
     </body>
