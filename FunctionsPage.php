@@ -1,16 +1,35 @@
 <?php
-
-
-
+// read a random value from the array names
+function randName($names){
+    
+    $name = $names[rand(0, 19)];
+    
+    return $name;
+    
+    
+}
+// read a random value from the array surname
+function randSurname($Surname){
+    
+    $sname = $Surname[rand(0, 19)];
+    
+    return $sname;
+    
+    
+}
+// make the main line of the array
 function GenerateLine($index, $name, $surname) {
 
     $dateOfBirth = GenDateOfBirth();
     $age = Getage($dateOfBirth);
     $initials = GetInisials($name);
+    
 
-    return $line = array($index, $name, $surname, $initials, $age, $dateOfBirth);
+    $line = array($index => array("index" => $index, "name" => $name,"surname" => $surname, "initials" =>  $initials,"age" => $age,"dateOfBirth" => $dateOfBirth));
+    
+    return $line; 
 }
-
+//generate a random date of birth
 function GenDateOfBirth() {
 
     $day = rand(1, 30);
@@ -26,18 +45,18 @@ function GenDateOfBirth() {
         return GenDateOfBirth();
     }
 }
-
+// get a age from dateofbirth 
 function Getage($dateOfBirth) {
-    echo $dateOfBirth;
+    
     
     $year = substr($dateOfBirth, 6, 4);
-     echo $year;
+    
     $age = date("Y") - $year;
-    echo $age;
+   
 
     return $age;
 }
-
+// get the initail from the name
 function GetInisials($name) {
     $Initial = explode(" ", $name);
     $initials = null;
@@ -45,4 +64,18 @@ function GetInisials($name) {
         $initials .= $I[0];
     }
     return $initials;
+}
+// write into a file
+function WriteToFile($NamesArr,$SurnameArr){
+    $file = fopen("CSV.csv","w"); 
+    $count = 0;
+    $arr = GenerateLine($count, randName($NamesArr), randSurname($SurnameArr));
+  
+foreach ($arr as $line)
+  {
+  fputcsv($file,));
+  }
+
+fclose($file); 
+
 }
