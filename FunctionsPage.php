@@ -88,26 +88,67 @@ function WriteToFile($amount) {
     fputcsv($output, $headers);
     foreach ($array as $keys => $line) {
         foreach ($line as $keys => $out) {
-            $lines = $out;
+            
             fputcsv($output, $out);
         }
     }
     fclose($output);
 }
 
-function checkUnique($line){
+function checkUnique($bigArray,$genLine){
     
-  
+    echo "</br>big array</br>";
+    print_r($bigArray);
+    echo "</br>gen line</br>";
+    print_r($genLine);
     
+    
+    
+    if (unique){
+        
+    }
+    else {
+        
+    }
+    
+}
+function checkUnique2($bigArray,$Index){
+    $bigArray1 = $bigArray;
+    $generatedLine = GenerateLine($Index);
+    echo $generatedLine;
+    $unique = true;
+    
+    foreach ($bigArray1 as $keys => $singleLine){
+        foreach ($singleLine as $key => $arrayLine){
+            if ($generatedLine == array_shift($arrayLine) ){
+                $unique = true;
+            }
+        }
+        
+    }
+    
+       
+    
+    
+    if ($unique == true){
+        return $generatedLine;
+    }
+    else {
+       checkUnique2($bigArray1,$Index);
+    }
     
 }
 
 Function createBigArr($lines) {
-
+$bigArr = array();
 
     for ($i = 0; $i <= $lines; $i++) {
-        $bigArr[$i] = array(GenerateLine($i));
+        
+        
+        $bigArr[$i] = array(checkUnique2($bigArr ,$i));
+        
     }
+    
 
     return $bigArr;
 }
@@ -141,10 +182,12 @@ $connection->close();
 //}
 function createHeaders($table){
     require 'ConnectionDB.php';
-    echo 'hello';
-    require_once 'ConnectionDB.php';
-    $create = "create table $table ( `index` int,`name` varchar(255),`surname` varchar(255), `initials` varchar(3),`age` int(11),`dateOfBirth` date)" ;
-mysqli_query($connection,$create);
+    
+    $dropTable = "Drop table $table" ;
+mysqli_query($connection,$dropTable );
+    
+    $createTable = "create table $table ( `index` int,`name` varchar(255),`surname` varchar(255), `initials` varchar(3),`age` int(11),`dateOfBirth` date)" ;
+mysqli_query($connection,$createTable);
 }
 
 
