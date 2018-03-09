@@ -45,7 +45,9 @@ require 'FunctionsPage.php';
              if (isset($_POST['iinputamount'])) {
             $amount = $_POST['iinputamount'];
             set_time_limit(0);
+            
             WriteToFile($amount);
+            checkUnique();
             $outputMessage = 'file created';
         }
         }

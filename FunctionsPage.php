@@ -2,20 +2,20 @@
 //require_once 'ConnectionDB.php';
 // read a random value from the array names
 function randName() {
-    $NamesArr = array("Jan", "Frik", "Ben", "Riaan", "Maria", "Susan", "Santie", "Freddie", "Peter", "Garret Pieter", "Pieter Andre", "Miena", "Aaron", "Aron-James", "Shadow", "Shae", "Shahmir", "Shai", "Shane", "jaco");
+    $namesArr = array("Jan", "Frik", "Ben", "Riaan", "Maria", "Susan", "Santie", "Freddie", "Peter", "Garret Pieter", "Pieter Andre", "Miena", "Aaron", "Aron-James", "Shadow", "Shae", "Shahmir", "Shai", "Shane", "jaco");
 
-    $name = $NamesArr[rand(0, 19)];
+    $name = $namesArr[rand(0, 19)];
 
     return $name;
 }
 
 // read a random value from the array surname
 function randSurname() {
-    $SurnameArr = array('Duran', 'Durham', 'Dyer', 'Eaton', 'Edwards', 'Elliott', 'Ellis', 'Ellison', 'Emerson', 'England', 'Fuentes', 'Fuller', 'Fulton', 'Gaines', 'Gallagher', 'Gallegos', 'Galloway', 'Gamble', 'Van Zyl', 'Harold');
+    $surnameArr = array('Duran', 'Durham', 'Dyer', 'Eaton', 'Edwards', 'Elliott', 'Ellis', 'Ellison', 'Emerson', 'England', 'Fuentes', 'Fuller', 'Fulton', 'Gaines', 'Gallagher', 'Gallegos', 'Galloway', 'Gamble', 'Van Zyl', 'Harold');
 
-    $sname = $SurnameArr[rand(0, 19)];
+    $surname = $surnameArr[rand(0, 19)];
 
-    return $sname;
+    return $surname;
 }
 
 // make the main line of the array
@@ -42,9 +42,9 @@ function GenDateOfBirth() {
     //$date = $day . "-" . $month . "-" . $year;
      $date = $year . "-" . $month . "-" .$day ;
     $time = strtotime($date);
-    $newformat = date('Y/m/d', $time);
+    $newFormat = date('Y/m/d', $time);
     if (checkdate($month, $day, $year) == True) {
-        return $newformat;
+        return $newFormat;
     } else {
         return GenDateOfBirth();
     }
@@ -74,7 +74,7 @@ function GetInisials($name) {
 
 // write into a file
 function WriteToFile($amount) {
-
+    // makes a array 
     $array = createBigArr($amount);
     $CreatedCSV = 'output.csv';
 
@@ -95,21 +95,18 @@ function WriteToFile($amount) {
     fclose($output);
 }
 
-function checkUnique($bigArray,$genLine){
-    
-    echo "</br>big array</br>";
-    print_r($bigArray);
-    echo "</br>gen line</br>";
-    print_r($genLine);
-    
-    
-    
-    if (unique){
-        
+function checkUnique(){
+$row = 0;
+if (($handle = fopen("output.csv", "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        $num = count($data);
+        for ($c=0; $c < $num; $c++) {
+            echo $data[$c];
+        }
     }
-    else {
-        
-    }
+    fclose($handle);
+}
+
     
 }
 function checkUnique2($bigArray,$Index){
@@ -142,10 +139,10 @@ function checkUnique2($bigArray,$Index){
 Function createBigArr($lines) {
 $bigArr = array();
 
-    for ($i = 0; $i <= $lines; $i++) {
+    for ($i = 0; $i < $lines; $i++) {
         
-        
-        $bigArr[$i] = array(checkUnique2($bigArr ,$i));
+        //checkUnique2($bigArr ,$i)
+        $bigArr[$i] = array(GenerateLine($i));
         
     }
     
@@ -167,19 +164,6 @@ function createTBL($file,$table){
 $connection->close();
 }
 
-//function createHeadersfromFile($file,$table){
-//     require_once 'ConnectionDB.php';
-//    $fp = fopen($file, 'r');
-//$frow = fgetcsv($fp);
-//
-//foreach($frow as $column) {
-//    if($columns) $columns .= ', ';
-//    $columns .= "`$column` varchar(250)";
-//}
-//
-//$create = "create table if not exists $table ($columns);";
-//mysqli_query($connection,$create);
-//}
 function createHeaders($table){
     require 'ConnectionDB.php';
     
