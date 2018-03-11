@@ -18,20 +18,6 @@ function randSurname() {
     return $surname;
 }
 
-// make the main line of the array
-function GenerateLine($index) {
-    $name = randName();
-    $surname = randSurname();
-    $dateOfBirth = GenDateOfBirth();
-    $age = Getage($dateOfBirth);
-    $initials = GetInisials($name);
-
-
-    // $line = array($index => array("index" => $index, "name" => $name,"surname" => $surname, "initials" =>  $initials,"age" => $age,"dateOfBirth" => $dateOfBirth));
-    $line = array("index" => $index, "name" => $name, "surname" => $surname, "initials" => $initials, "age" => $age, "dateOfBirth" => $dateOfBirth);
-    return $line;
-}
-
 //generate a random date of birth
 function GenDateOfBirth() {
 
@@ -62,7 +48,7 @@ function Getage($dateOfBirth) {
     return $age;
 }
 
-// get the initail from the name
+// get the initial from the name
 function GetInisials($name) {
     $Initial = explode(" ", $name);
     $initials = null;
@@ -72,13 +58,28 @@ function GetInisials($name) {
     return $initials;
 }
 
+// make the main line of the array
+function GenerateLine($index) {
+    $name = randName();
+    $surname = randSurname();
+    $dateOfBirth = GenDateOfBirth();
+    $age = Getage($dateOfBirth);
+    $initials = GetInisials($name);
+
+
+    // $line = array($index => array("index" => $index, "name" => $name,"surname" => $surname, "initials" =>  $initials,"age" => $age,"dateOfBirth" => $dateOfBirth));
+    $line = array("index" => $index, "name" => $name, "surname" => $surname, "initials" => $initials, "age" => $age, "dateOfBirth" => $dateOfBirth);
+    return $line;
+}
+
+
 // write into a file
 function WriteToFile($amount) {
     // makes a array 
     $array = createBigArr($amount);
     $CreatedCSV = 'output.csv';
-
-
+    
+    checkUnique2($array,1);
     $output = fopen($CreatedCSV, "w");
     //$headers = array_keys($array[0]);
 
@@ -107,32 +108,31 @@ if (($handle = fopen("output.csv", "r")) !== FALSE) {
     fclose($handle);
 }
 
+    $csv = array_map('str_getcsv', file($file));
+    array_walk($csv, function(&$a) use ($csv) {
+      $a = array_combine($csv[0], $a);
+    });
+    array_shift($csv); // remove column header
+
+
     
 }
+
 function checkUnique2($bigArray,$Index){
-    $bigArray1 = $bigArray;
-    $generatedLine = GenerateLine($Index);
-    echo $generatedLine;
-    $unique = true;
-    
-    foreach ($bigArray1 as $keys => $singleLine){
-        foreach ($singleLine as $key => $arrayLine){
-            if ($generatedLine == array_shift($arrayLine) ){
-                $unique = true;
-            }
-        }
-        
-    }
-    
-       
-    
-    
-    if ($unique == true){
-        return $generatedLine;
-    }
-    else {
-       checkUnique2($bigArray1,$Index);
-    }
+     $bigArray1 = $bigArray;
+     $generatedLine = GenerateLine($Index);
+     
+     foreach ($bigArray1 as $keys => $singleLine){
+         foreach ($singleLine as $key => $arrayLine){
+             if($generatedLine['name'] == $arrayLine['name'] && $generatedLine['surname'] == $arrayLine['surname'] && $generatedLine['dateOfBirth'] == $arrayLine['dateOfBirth'] ){
+              $generatedLine = checkUnique2($bigArray1,$Index); 
+              echo '1';
+             }
+         }
+         }
+         
+         return $generatedLine ;
+
     
 }
 
@@ -142,7 +142,7 @@ $bigArr = array();
     for ($i = 0; $i < $lines; $i++) {
         
         //checkUnique2($bigArr ,$i)
-        $bigArr[$i] = array(GenerateLine($i));
+        $bigArr[$i] = array(checkUnique2($bigArr,$i));
         
     }
     

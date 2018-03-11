@@ -2,6 +2,8 @@
 <?php
 $NamesArr = array("Jan", "Frik", "Ben", "Riaan", "Maria", "Susan", "Santie", "Freddie", "Peter", "Garret Pieter", "Pieter Andre", "Miena", "Aaron", "Aron-James", "Shadow", "Shae", "Shahmir", "Shai", "Shane", "jaco");
 $SurnameArr = array('Duran', 'Durham', 'Dyer', 'Eaton', 'Edwards', 'Elliott', 'Ellis', 'Ellison', 'Emerson', 'England', 'Fuentes', 'Fuller', 'Fulton', 'Gaines', 'Gallagher', 'Gallegos', 'Galloway', 'Gamble', 'Van Zyl', 'Harold');
+set_time_limit(0);
+//ini_set('memory_limit', '-1');
 
 
 require 'FunctionsPage.php';
@@ -44,10 +46,9 @@ require 'FunctionsPage.php';
             }
              if (isset($_POST['iinputamount'])) {
             $amount = $_POST['iinputamount'];
-            set_time_limit(0);
             
             WriteToFile($amount);
-            checkUnique();
+            //checkUnique2();
             $outputMessage = 'file created';
         }
         }
