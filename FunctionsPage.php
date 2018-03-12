@@ -50,9 +50,9 @@ function Getage($dateOfBirth) {
 
 // get the initial from the name
 function GetInisials($name) {
-    $Initial = explode(" ", $name);
+    $initial = explode(" ", $name);
     $initials = null;
-    foreach ($Initial as $I) {
+    foreach ($initial as $I) {
         $initials .= $I[0];
     }
     return $initials;
@@ -77,10 +77,10 @@ function GenerateLine($index) {
 function WriteToFile($amount) {
     // makes a array 
     $array = createBigArr($amount);
-    $CreatedCSV = 'output.csv';
+    $createdCSV = 'output.csv';
     
-    checkUnique2($array,1);
-    $output = fopen($CreatedCSV, "w");
+    
+    $output = fopen($createdCSV, "w");
     //$headers = array_keys($array[0]);
 
     foreach ($array as $keys => $line) {
@@ -96,36 +96,14 @@ function WriteToFile($amount) {
     fclose($output);
 }
 
-function checkUnique(){
-$row = 0;
-if (($handle = fopen("output.csv", "r")) !== FALSE) {
-    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
-        $num = count($data);
-        for ($c=0; $c < $num; $c++) {
-            echo $data[$c];
-        }
-    }
-    fclose($handle);
-}
-
-    $csv = array_map('str_getcsv', file($file));
-    array_walk($csv, function(&$a) use ($csv) {
-      $a = array_combine($csv[0], $a);
-    });
-    array_shift($csv); // remove column header
-
-
-    
-}
-
-function checkUnique2($bigArray,$Index){
+function checkUnique($bigArray,$index){
      $bigArray1 = $bigArray;
-     $generatedLine = GenerateLine($Index);
+     $generatedLine = GenerateLine($index);
      
      foreach ($bigArray1 as $keys => $singleLine){
          foreach ($singleLine as $key => $arrayLine){
              if($generatedLine['name'] == $arrayLine['name'] && $generatedLine['surname'] == $arrayLine['surname'] && $generatedLine['dateOfBirth'] == $arrayLine['dateOfBirth'] ){
-              $generatedLine = checkUnique2($bigArray1,$Index); 
+              $generatedLine = checkUnique2($bigArray1,$index); 
               echo '1';
              }
          }
@@ -136,13 +114,13 @@ function checkUnique2($bigArray,$Index){
     
 }
 
-Function createBigArr($lines) {
+Function createBigArr($amountOfLines) {
 $bigArr = array();
 
-    for ($i = 0; $i < $lines; $i++) {
+    for ($i = 0; $i < $amountOfLines; $i++) {
         
         //checkUnique2($bigArr ,$i)
-        $bigArr[$i] = array(checkUnique2($bigArr,$i));
+        $bigArr[$i] = array(checkUnique($bigArr,$i));
         
     }
     

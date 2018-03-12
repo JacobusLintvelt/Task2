@@ -11,51 +11,70 @@ require 'FunctionsPage.php';
 <html>
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+        <title>csv import</title>
     </head>
     <body>
-        <form method="POST">
-            Generate a csv file:</br></br>
-            Amount of records <input type="text" name="iinputamount" pattern="[0-9]+" required="">
-
-            <input type="submit" name="sub"></br>
-
-
-        </form>
-
-       <!----------------------Form 2-------------------------------------------------------------------->
-        </br>----------------------------------------------------------------------------------</br>
-        <form method="POST">
-            Choose a file to generate a table :</br></br>
-            
-            <input type="file" id="file"  name="file" required="" accept=".csv"><input type="reset" value="Cancel"></br></br>
-            <input type="submit" name="sub" value="Create Table"></br>
-        </form>
-    <?php
-            $outputMessage = "";
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            
-             if (isset($_POST['file'])) {
-                $file = $_POST['file'];
-                createTBL($file, "csv_import");
+        <div class="container">
+            <form class=" form-control panel panel-default" method="POST">
+                <h3> Generate a csv file:</h3>
+                <div class="form-group">
+                    <label class="label label-default" for="iinputamount">Amount of records</label>
+                    <input class="form-control" type="text" name="iinputAmount" pattern="[0-9]+" required="">
+                </div>
+                    <input class="btn btn-info" type="submit" name="submit">
                 
-                $outputMessage = 'Table created';
-            }
-            else{
-                $outputMessage = 'Please select a file';
-            }
-             if (isset($_POST['iinputamount'])) {
-            $amount = $_POST['iinputamount'];
+
+            </form>
+
+            <!----------------------Form 2-------------------------------------------------------------------->
+
+            <form class=" form-control panel panel-default" method="POST">
+                <h3>Choose a file to generate a table</h3>
+                
+                <div class="form-group">
+                    <input class="form-control "  type="file" id="file"  name="file" required="" accept=".csv">
+                </div>   
+                
+                <div class="form-group">
+                    <input  class=" btn btn-info" type="submit" name="submitFile" value="Create Table">
+                    <input  class="btn btn-danger" type="reset" value="Cancel">
+                </div>
+                
+            </form>
+
+
             
-            WriteToFile($amount);
-            //checkUnique2();
-            $outputMessage = 'file created';
-        }
-        }
-        ?>
-        </br>----------------------------------------------------------------------------------
-        <br>Status message:  <p><?php  if (isset($outputMessage)) { echo $outputMessage; }?></p>
-        
+            <?php
+            $outputMessage = "";
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+                if (isset($_POST['file'])) {
+                    $file = $_POST['file'];
+                    createTBL($file, "csv_import");
+
+                    $outputMessage = 'Table created';
+                } else {
+                    $outputMessage = 'Please select a file';
+                }
+                if (isset($_POST['iinputAmount'])) {
+                    $amount = $_POST['iinputAmount'];
+
+                    WriteToFile($amount);
+
+                    $outputMessage = 'file created';
+                }
+            }
+            ?>
+
+            <h3>Status message:</h3>  <p><?php if (isset($outputMessage)) {
+                echo $outputMessage;
+            } ?></p>
+        </div>
     </body>
 </html>
 
